@@ -1,0 +1,3 @@
+class GameTurn
+
+end 
