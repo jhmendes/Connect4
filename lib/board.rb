@@ -1,11 +1,9 @@
-require 'pry'
-
 require_relative 'board_space'
 require_relative 'player'
 
 class Board
 
-attr_accessor :board
+  attr_accessor :board
 
   def initialize
     @board = []
@@ -18,8 +16,12 @@ attr_accessor :board
     end
   end
 
+  def rows
+    @board
+  end
+
   def add_turn(player, row_index, col_index)
-   @board[row_index][col_index] = player
+   @board[row_index][col_index].player = player
  end
 
 
@@ -28,11 +30,7 @@ attr_accessor :board
     @board.each_with_index do |row, index|
       spots = []
       row.each do |space|
-        if space.player.nil?
-          spots << space.player
-        else
-          spots << ' '
-        end
+          spots << space.to_char
       end
       board_print << "| " + spots.join(' ') + " |\n"
     end
@@ -40,6 +38,22 @@ attr_accessor :board
     board_print
   end
 
+  def empty_spaces?
+    @board.each do |row|
+      row.each do |space|
+        return true if space.player.nil?
+      end
+    end
+    return false
+  end
+
+  def winner?
+
+  end
+
 end
 
-binding.pry
+
+
+# require 'pry'
+# binding.pry

@@ -1,3 +1,5 @@
+
+
 class Player #done!
 
  attr_accessor :name, :character
