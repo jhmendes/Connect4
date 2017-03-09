@@ -20,9 +20,21 @@ class Board
     @board
   end
 
-  def add_turn(player, row_index, col_index)
-   @board[row_index][col_index].player = player
- end
+  def add_turn(player, col_index)
+    if !@board[5][col_index].occupied?
+      @board[5][col_index].player = player
+    elsif @board[5][col_index].occupied? && !@board[4][col_index].occupied?
+      @board[4][col_index].player = player
+    elsif @board[4][col_index].occupied? && !@board[3][col_index].occupied?
+        @board[3][col_index].player = player
+    elsif @board[3][col_index].occupied? && !@board[2][col_index].occupied?
+        @board[2][col_index].player = player
+    elsif @board[2][col_index].occupied? && !@board[1][col_index].occupied?
+        @board[1][col_index].player = player
+    else
+        @board[0][col_index].player = player
+    end
+  end
 
 
   def print
@@ -47,13 +59,40 @@ class Board
     return false
   end
 
-  def winner?
+  # def column_full?
+  #   @board.each do |row|
+  #     row.each do |space|
+  #       if !space.player.nil?
+  #         return true
+  #       end
+  #     end
+  #   end
+  #   return false
+  # end
 
+  def winner?
+    horizonal_win? 
   end
 
+
+  def horizonal_win?
+    win_condition = []
+    @board.each do |row|
+      row.each do |space|
+        if space.player.nil?
+          win_condition << ''
+        else
+          win_condition << space.player.character
+        end
+      end
+    end
+    win_condition.join('').include?('RRRR') || win_condition.join('').include?('YYYY')
+  end
+
+  def vertical_win?
+  #can't figure this out
+  end
+
+
+
 end
-
-
-
-# require 'pry'
-# binding.pry

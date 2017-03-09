@@ -2,13 +2,8 @@ require_relative 'board'
 require_relative 'player'
 require_relative 'board_space'
 
-# board = Board.new
-# space = BoardSpace.new
-# player = Player.new('john', 'r')
-#
-# board.add_turn(space.player, 5, 3)
-#
-# puts board.print
+
+board = Board.new
 
 puts "Welcome to Connect 4!"
 puts
@@ -33,7 +28,43 @@ puts "Time to play!"
 red_player = Player.new(player_1_name, 'R')
 yellow_player = Player.new(player_2_name, 'Y')
 
+players = [red_player, yellow_player].shuffle
+turn_index = 0
 
-while !board.winner? && board.has_empty_spaces?
-  #play the game!
+#PLAY THE GAME
+
+while !board.winner? && board.empty_spaces?
+  puts "It is #{players[turn_index].name}'s turn!"
+
+  puts "What column would you like to play?"
+  col_index = gets.chomp.to_i
+
+  if col_index >= 2
+    col_index = col_index - 1
+  else
+    col_index = 0
+  end
+
+  while col_index < 0 || col_index >= 7
+    puts "Sorry, that is an invalid column!"
+    print "Please try again: "
+    col_index = gets.chomp.to_i
+
+    if col_index >= 2
+      col_index = col_index - 1
+    else
+      col_index = 0
+    end
+
+  end
+
+  board.add_turn(players[turn_index], col_index)
+
+  if board.winner?
+    puts "#{players[turn_index].character} wins!"
+  end
+
+  puts board.print
+  turn_index = turn_index == 0 ? 1 : 0
+
 end

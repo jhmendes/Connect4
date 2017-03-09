@@ -25,7 +25,7 @@ RSpec.describe Board do
   it 'adds a player to a space and prints out a board showing the taken space' do
     board = Board.new
     player = Player.new("john", "r")
-    board.add_turn(player, 5, 3)
+    board.add_turn(player, 3)
     board_printout =
     "|               |\n" +
     "|               |\n" +
@@ -49,10 +49,15 @@ RSpec.describe Board do
     player = Player.new("john", 'r')
       6.times.each do |row_index|
         7.times.each do |col_index|
-          board.add_turn(player, row_index, col_index)
+          board.add_turn(player, col_index)
         end
       end
     expect(board.empty_spaces?).to eq(false)
   end
+
+  it "has a winner if there are 4 spaces occupied horizontally by the same player"
+
+
+  it 'has a winner if there are 4 spaces occupied vertically by the same player'
 
 end
