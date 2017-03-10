@@ -55,9 +55,28 @@ RSpec.describe Board do
     expect(board.empty_spaces?).to eq(false)
   end
 
-  it "has a winner if there are 4 spaces occupied horizontally by the same player"
+  it "has a winner if there are 4 spaces occupied horizontally by the same player" do
+    board = Board.new
+    player = Player.new('john', 'R')
+    4.times.each do |row_index|
+      4.times.each do |col_index|
+        board.add_turn(player, col_index)
+      end
+    end
+    expect(board.horizontal_win?).to eq(true)
+  end
 
 
-  it 'has a winner if there are 4 spaces occupied vertically by the same player'
+  it 'has a winner if there are 4 spaces occupied vertically by the same player' do
+    board = Board.new
+    player = Player.new('john', 'R')
+    4.times.each do |row_index|
+      2.times.each do |col_index|
+        board.add_turn(player, col_index)
+      end
+    end
+    expect(board.vertical_win?).to eq(true)
+  end
+
 
 end

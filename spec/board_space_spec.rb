@@ -1,4 +1,4 @@
-require 'spec_helper' #done!
+require 'spec_helper' 
 
 RSpec.describe BoardSpace do
   it 'it is occupied if a player has played there' do

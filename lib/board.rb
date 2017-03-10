@@ -27,13 +27,13 @@ class Board
     elsif @board[5][col_index].occupied? && !@board[4][col_index].occupied?
       @board[4][col_index].player = player
     elsif @board[4][col_index].occupied? && !@board[3][col_index].occupied?
-        @board[3][col_index].player = player
+      @board[3][col_index].player = player
     elsif @board[3][col_index].occupied? && !@board[2][col_index].occupied?
-        @board[2][col_index].player = player
+      @board[2][col_index].player = player
     elsif @board[2][col_index].occupied? && !@board[1][col_index].occupied?
-        @board[1][col_index].player = player
+      @board[1][col_index].player = player
     else
-        @board[0][col_index].player = player
+      @board[0][col_index].player = player
     end
   end
 
@@ -61,22 +61,25 @@ class Board
   end
 
   def winner?
-    horizonal_win? || vertical_win?
+    horizontal_win? || vertical_win?
   end
 
 
-  def horizonal_win?
+  def horizontal_win?
     win_condition = []
     @board.each do |row|
       row.each do |space|
         if space.player.nil?
-          win_condition << ''
+          win_condition << 'X'
         else
           win_condition << space.player.character
         end
       end
+      if win_condition.join('').include?('RRRR') || win_condition.join('').include?('YYYY')
+        return true
+      end
     end
-    win_condition.join('').include?('RRRR') || win_condition.join('').include?('YYYY')
+    false
   end
 
   def vertical_win?
@@ -84,22 +87,25 @@ class Board
     7.times do |index|
       columns << column(index)
     end
-   columns.any? do |column|
-     column.join.include?("YYYY") || column.join.include?("RRRR")
-   end
- end
+    columns.each do |column|
+     if column.join('').include?("YYYY") || column.join('').include?("RRRR")
+       return true
+     end
+    end
+    false
+  end
 
 
- def column(index)
-   column = []
-     @board.each do |row|
-      if row[index].player.nil?
-        column << ''
-      else
-        column << row[index].player.character
+  def column(index)
+    column = []
+      @board.each do |row|
+        if row[index].player.nil?
+          column << ''
+        else
+          column << row[index].player.character
+        end
       end
-   end
-   column
- end
+      column
+    end
 
 end

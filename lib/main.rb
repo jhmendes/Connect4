@@ -34,6 +34,7 @@ turn_index = 0
 #PLAY THE GAME
 
 while !board.winner? && board.empty_spaces?
+
   puts "It is #{players[turn_index].name}'s turn!"
   puts "What column would you like to play?"
   col_index = gets.chomp.to_i
@@ -55,10 +56,15 @@ while !board.winner? && board.empty_spaces?
     end
   end
 
-  board.add_turn(players[turn_index], col_index)
-  if board.winner?
-    puts "#{players[turn_index].character} wins!"
+  if board.board[0][col_index].occupied?
+    puts "Column is already filled, please try a new column"
+  else
+    board.add_turn(players[turn_index], col_index)
+    puts board.print
+    if board.winner?
+      puts "#{players[turn_index].character} wins!"
+    end
+    turn_index = turn_index == 0 ? 1 : 0
   end
-  puts board.print
-  turn_index = turn_index == 0 ? 1 : 0
+
 end
