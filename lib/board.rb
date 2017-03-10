@@ -1,5 +1,6 @@
 require_relative 'board_space'
 require_relative 'player'
+require 'pry'
 
 class Board
 
@@ -59,19 +60,8 @@ class Board
     return false
   end
 
-  # def column_full?
-  #   @board.each do |row|
-  #     row.each do |space|
-  #       if !space.player.nil?
-  #         return true
-  #       end
-  #     end
-  #   end
-  #   return false
-  # end
-
   def winner?
-    horizonal_win? 
+    horizonal_win? || vertical_win?
   end
 
 
@@ -90,9 +80,26 @@ class Board
   end
 
   def vertical_win?
-  #can't figure this out
-  end
+    columns = []
+    7.times do |index|
+      columns << column(index)
+    end
+   columns.any? do |column|
+     column.join.include?("YYYY") || column.join.include?("RRRR")
+   end
+ end
 
 
+ def column(index)
+   column = []
+     @board.each do |row|
+      if row[index].player.nil?
+        column << ''
+      else
+        column << row[index].player.character
+      end
+   end
+   column
+ end
 
 end
